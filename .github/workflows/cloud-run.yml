@@ -33,16 +33,16 @@ jobs:
 
             - name: Build and tag the docker image
               run: |-
-                  docker build . --tag asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+                  docker build . --tag asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:latest
 
             - name: Push the image to the Artifacts Registry
               run: |-
-                  docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+                  docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:latest
 
             - name: Deploy
               run: |-
                   gcloud run deploy $REPO_NAME \
                   --region $REGION \
-                  --image asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:$GITHUB_SHA \
+                  --image asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:latest \
                   --platform "managed" \
                   --quiet
