@@ -43,6 +43,6 @@ jobs:
               run: |-
                   gcloud run deploy $REPO_NAME \
                   --region $REGION \
-                  --image asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$GITHUB_SHA \
+                  --image asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:$GITHUB_SHA \
                   --platform "managed" \
                   --quiet
