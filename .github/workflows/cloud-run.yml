@@ -33,16 +33,16 @@ jobs:
 
             - name: Build and tag the docker image
               run: |-
-                  docker build . --tag asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:latest
+                  docker build . --tag asia-south1-docker.pkg.dev/agprop-in/test-gcp-cloud/test:latest
 
             - name: Push the image to the Artifacts Registry
               run: |-
-                  docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:latest
+                  docker push asia-south1-docker.pkg.dev/agprop-in/test-gcp-cloud/test:latest
 
             - name: Deploy
               run: |-
                   gcloud run deploy $REPO_NAME \
                   --region $REGION \
-                  --image asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/test:latest \
+                  --image asia-south1-docker.pkg.dev/agprop-in/test-gcp-cloud/test:latest \
                   --platform "managed" \
                   --quiet
