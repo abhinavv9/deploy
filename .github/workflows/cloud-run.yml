@@ -1,0 +1,47 @@
+name: test-app
+
+on:
+    push:
+        - master
+        - main
+
+env:
+    PROJECT_ID: ${{ secrets.CLOUD_RUN_PROJECT_NAME }}
+    REGION: asia-south1
+    REPO_NAME: test-gcp-deploy
+
+jobs:
+    build-and-deploy:
+        name: Setup, Build, and Deploy
+        runs-on: ubunut-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v0'
+              with:
+                  credentials_json: '${{ sescrets.CLOUD_RUN_SERVICE_ACCOUNT }}'
+
+            # Setup gcloud CLI/SDK
+            - name: Set up Cloud SDK
+              uses: google-github-actions/setup-gcloud@v0
+
+            - name: Authorize Docker push
+              run: gcloud auth configure-docker
+
+            - name: Build and tag the docker image
+              run: |-
+                  docker build . --tag asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+
+            - name: Push the image to the Artifacts Registry
+              run: |-
+                  docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA
+
+            - name: Deploy
+              run: |-
+                  gcloud run deploy $REPO_NAME \
+                  --region $REGION \
+                  --image asia-south1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME:$GITHUB_SHA \
+                  --platform "managed" \
+                  --quiet
