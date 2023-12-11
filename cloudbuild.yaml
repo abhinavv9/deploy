@@ -1,0 +1,25 @@
+steps:
+- name: node:15
+  entrypoint: npm
+  args: ["install"]
+- name: node:15
+  entrypoint: npm
+  args: ["run", "create-env"]
+  env:
+    - 'MY_SECRET_KEY=${_TEST_NAME}'
+    - 'MY_PROD_DATABASE=${_DATABASE}'
+    - 'MY_PROD_HOST=${_HOST}'
+    - 'MY_PROD_PASSWORD=${_PASSWORD}'
+    - 'MY_PROD_PATH=${_PATH}'
+    - 'MY_PROD_USERNAME=${_USERNAME}'
+    - 'SENDGRID_API_KEY=${_SENDGRID_API_KEY}'
+    - 'AIKEY=${_AIKEY}'
+    - 'BRAND_PROD_DATABASE=${_BRAND_PROD_DATABASE}'
+    - 'BRAND_PROD_USERNAME=${_BRAND_PROD_USERNAME}'
+    - 'BRAND_PROD_PASSWORD=${_BRAND_PROD_PASSWORD}'
+    - 'BRAND_PROD_HOST=${_BRAND_PROD_HOST}'
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ["app", "deploy"]
+timeout: "1600s"
+options:
+ logging: CLOUD_LOGGING_ONLY
