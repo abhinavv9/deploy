@@ -14,7 +14,7 @@ env:
 jobs:
     build-and-deploy:
         name: Setup, Build, and Deploy
-        runs-on: ubunut-latest
+        runs-on: ubuntu-latest
         steps:
             - name: Checkout
               uses: actions/checkout@v3
