@@ -4,7 +4,6 @@ steps:
       args: ['install']
     - name: node:15
       entrypoint: npm
-      args: ['run', 'create-env']
     - name: 'asia-south1-docker.pkg.dev/agprop-in/test-gcp-cloud'
       args: ['app', 'deploy']
 timeout: '1600s'
