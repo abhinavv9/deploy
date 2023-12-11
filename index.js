@@ -5,9 +5,9 @@ const app = express();
 require('dotenv').config();
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hello World! abcd');
 });
 
 app.listen(process.env.PORT || 8080, () => {
-    console.log('GCP DEPLOY ad-> listening on port: ', process.env.PORT);
+    console.log('GCP DEPLOY aaad-> listening on port: ', process.env.PORT);
 });
