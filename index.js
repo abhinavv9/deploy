@@ -9,5 +9,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080, () => {
-    console.log('GCP DEPLOY aaad-> listening on port: ', process.env.PORT);
+    console.log('GCP DEPLOY aaa-> listening on port: ', process.env.PORT);
 });
